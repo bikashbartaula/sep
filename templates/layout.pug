@@ -1,0 +1,111 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title Loan Management System
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, minimal-ui')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    // for ios 7 style, multi-resolution icon of 152x152
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='apple-mobile-web-app-status-barstyle', content='black-translucent')
+    link(rel='apple-touch-icon', href='/assets/images/logo.png')
+    meta(name='apple-mobile-web-app-title', content='Flatkit')
+    // for Chrome on Android, multi-resolution icon of 196x196
+    meta(name='mobile-web-app-capable', content='yes')
+    link(rel='shortcut icon', sizes='196x196', href='/assets/images/logo.png')
+    // style
+    link(rel='stylesheet', href='/assets/animate.css/animate.min.css', type='text/css')
+    link(rel='stylesheet', href='/assets/glyphicons/glyphicons.css', type='text/css')
+    link(rel='stylesheet', href='/assets/font-awesome/css/font-awesome.min.css', type='text/css')
+    link(rel='stylesheet', href='/assets/material-design-icons/material-design-icons.css', type='text/css')
+    link(rel='stylesheet', href='/assets/bootstrap/dist/css/bootstrap.min.css', type='text/css')
+    // build:css /assets/styles/app.min.css
+    link(rel='stylesheet', href='/assets/styles/app.css', type='text/css')
+    // endbuild
+    link(rel='stylesheet', href='/assets/styles/font.css', type='text/css')
+  body
+    #app.app
+      #content.app-content.box-shadow-z0(role='main')
+        .app-header.white.box-shadow
+          .navbar.navbar-toggleable-sm.flex-row.align-items-center
+            // Open side - Naviation on mobile
+            a.hidden-lg-up.mr-3(data-toggle='modal', data-target='#aside')
+              i.material-icons 
+            // /
+            // Page title - Bind to $state's title
+            #pageTitle.mb-0.h5.no-wrap(ng-bind='$state.current.data.title')
+            // navbar collapse
+            #collapse.collapse.navbar-collapse
+              // link and dropdown
+              ul.nav.navbar-nav.mr-auto
+                li.nav-item.dropdown
+                  a.nav-link(href='/application/new')
+                    //i.fa.fa-fw.fa-plus.text-muted
+                    img(src='/logo.png', style='height: 30px')
+                    span New Application
+                  div(ui-include="'../views/blocks/dropdown.new.html'")
+              div(ui-include="'../views/blocks/navbar.form.html'")
+              // /
+            // / navbar collapse
+            // navbar right
+            ul.nav.navbar-nav.ml-auto.flex-row
+              li.nav-item.dropdown.pos-stc-xs
+                a.nav-link.mr-2(href='', data-toggle='dropdown')
+                  i.material-icons 
+                  span.label.label-sm.up.warn 3
+                div(ui-include="'../views/blocks/dropdown.notification.html'")
+              li.nav-item.dropdown
+                a.nav-link.p-0.clear(href='#', data-toggle='dropdown')
+                  span.avatar.w-32
+                    img(src='/assets/images/a0.jpg', alt='...')
+                    i.on.b-white.bottom
+                div(ui-include="'../views/blocks/dropdown.user.html'")
+              li.nav-item.hidden-md-up
+                a.nav-link.pl-2(data-toggle='collapse', data-target='#collapse')
+                  i.material-icons 
+            // / navbar right
+        .app-footer
+          .p-2.text-xs
+            .pull-right.text-muted.py-1
+              | © Copyright 
+              strong SEP
+              span.hidden-xs-down - Demonstration Version 1.0.0
+              a(ui-scroll-to='content')
+                i.fa.fa-long-arrow-up.p-x-sm
+            .nav
+              a.nav-link(href='../') About
+        #view.app-body(ui-view='')
+          .p-a.white.lt.box-shadow
+            .row
+              .col-sm-6
+                h4.mb-0._300 Welcome to the UTS Loan Application System
+                small.text-muted
+                  | !{new Date()} 
+          .padding    
+            block body
+    // jQuery
+    script(src='/libs/jquery/jquery/dist/jquery.js')
+    // Bootstrap
+    script(src='/libs/jquery/tether/dist/js/tether.min.js')
+    script(src='/libs/jquery/bootstrap/dist/js/bootstrap.js')
+    // core
+    script(src='/libs/jquery/underscore/underscore-min.js')
+    script(src='/libs/jquery/jQuery-Storage-API/jquery.storageapi.min.js')
+    script(src='/libs/jquery/PACE/pace.min.js')
+    script(src='/scripts/config.lazyload.js')
+    script(src='/scripts/palette.js')
+    script(src='/scripts/ui-load.js')
+    script(src='/scripts/ui-jp.js')
+    script(src='/scripts/ui-include.js')
+    script(src='/scripts/ui-device.js')
+    script(src='/scripts/ui-form.js')
+    script(src='/scripts/ui-nav.js')
+    script(src='/scripts/ui-screenfull.js')
+    script(src='/scripts/ui-scroll-to.js')
+    script(src='/scripts/ui-toggle-class.js')
+    script(src='/scripts/app.js')
+    // ajax
+    script(src='/libs/jquery/jquery-pjax/jquery.pjax.js')
+    script(src='/scripts/ajax.js')
+    // endbuild
+    block scripts

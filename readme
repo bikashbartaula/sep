@@ -1,0 +1,5 @@
+You will need to install Node.JS to run this locally (http://nodejs.org/)
+
+Database details are in the configuration folder (and are real).
+
+There is a live version running at http://45.63.28.92:3000

@@ -1,0 +1,70 @@
+extends ./layout 
+
+block body
+  .row
+    .col-md-12
+      .box
+        .box-header
+          h2 Your Applications
+        .table-responsive
+          table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+            thead
+              tr
+                th Application ID
+                th Amount
+                th Reason
+                th Date Started
+                th Status
+                if(user.role.id == 1)
+                  th Approve
+                  th Reject
+            tbody
+              if(data.applications && data.applications.length > 0)
+                for application in data.applications
+                  tr
+                    td #{application.id}
+                    td #{application.Application_Answers[0] ? "$" + application.Application_Answers[0].answer : 'N/A'}
+                    td #{application.Application_Answers[2] ? application.Application_Answers[2].answer : 'N/A'}
+                    td #{application.date_submitted || 'Not submitted'}
+                    td #{application.Application_Status ? application.Application_Status.name : "N/A"}
+                    if(user.role.id == 1)
+                      td
+                        button#action.btn.btn-block.primary(type='button', style='width: 50%', name=application.id) 
+                          i.fa.fa-check
+                      td
+                        button#action.btn.btn-block.danger(type='button', style='width: 50%', name=application.id) 
+                          i.fa.fa-times
+
+  .row
+    .col-md-12
+      .box
+        .box-header
+          h2 Your Loans
+        .table-responsive
+          table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+            thead
+              tr
+                th Loan ID
+                th Amount
+                th Reminaing
+                th Date Started
+
+block scripts
+  script.
+    $('button#action').on('click', function() {
+      var approve = $(this).attr('class').split(' ').indexOf('primary') !== -1;
+      var id = $(this).attr('name');
+      $.post({
+        url: '/application/process',
+        data: {
+          approve: approve,
+          application_id: id
+        }
+      })
+      .then(function() {
+        console.log('Success');
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    });

@@ -1,0 +1,31 @@
+extends ./layout 
+
+block body
+    .row
+        .col-md-12
+            .box
+                .box-header
+                    h2 New Application
+                .box-body
+                    form(method='post', action='/application/new')
+                        if(data.application_id)
+                            input.form-control(name='application', type='number', hidden='' value=data.application_id)
+                        if(data.questions && data.questions.length > 0)
+                            for question in data.questions
+                                .form-group
+                                    label #{question.question}
+                                case question.type_id
+                                    when 1
+                                        input.form-control(name=question.id, type='number', required='')
+                                    when 2
+                                        input.form-control(name=question.id, type='text', required='')
+                                br
+                            button#submit.btn.btn-block.primary(type='submit', style='width: 125px') Submit
+
+
+block scripts
+    script.
+        $(document).ready(function() {
+            var err = !{JSON.stringify(err || null)};
+            console.log(err);
+        });
