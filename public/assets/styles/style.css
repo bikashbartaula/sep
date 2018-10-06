@@ -2,3 +2,36 @@
     padding-top: 6.5rem !important;
 }
 
+ul.headerM li a {
+    display: inline-block;
+}
+#view .p-a {
+    top: 9em;
+    position: relative;
+
+}
+
+.nav>li>a:focus,
+.nav>li>a:hover{
+    background-color: #0cc2aa !important;
+    color: #fff;
+}
+
+.padding.bodyM {
+    margin-top: 7.5em;
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 767px) {
+    .padding.bodyM {
+        margin-top: 3.5em;
+    }
+    #view .p-a {
+        top: 4em;
+        position: relative;
+    }
+    .app-header {
+
+        height: 100px;
+    }
+}

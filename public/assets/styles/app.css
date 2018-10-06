@@ -1495,7 +1495,7 @@ a.list-group-item.hover {
 .row [class*="col-"] {
   padding-left: 12px;
   padding-right: 12px;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .row-sm {
@@ -1969,6 +1969,7 @@ a.list-group-item.hover {
 .box-header {
   position: relative;
   padding: 1rem;
+  background: #07c9b3;
 }
 
 .box-header h2,

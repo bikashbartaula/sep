@@ -47,18 +47,36 @@ html(lang='en')
             // navbar collapse
             #collapse.collapse.navbar-collapse
               // link and dropdown
-              ul.nav.navbar-nav.mr-auto
+              ul.nav.navbar-nav.mr-auto.headerM
                 li.nav-item.dropdown
-                  a.nav-link(href='/application/new')
+                  a.nav-link(href='/')
                     //i.fa.fa-fw.fa-plus.text-muted
                     img(src='/logo.png', style='height: 100px')
-                    span New Application
+                  
+                  a.nav-link(href='../') 
+                    span HOME   |
+                    a.nav-link(href='/')
+                      span Our Team   |
+                  a.nav-link(href='/application/new')
+                    span New Application  |
+                  a.nav-link(href='/application/new')
+                    span New Application  |
+                  a.nav-link(href='/application/new')
+                    span New Application  |
                   div(ui-include="'../views/blocks/dropdown.new.html'")
               div(ui-include="'../views/blocks/navbar.form.html'")
               // /
             // / navbar collapse
             // navbar right
-            ul.nav.navbar-nav.ml-auto.flex-row
+            ul.nav.navbar-nav.ml-auto.flex-row.right-navM
+              li.nav-item.socail
+                a.nav-link.mr-2(href='https://www.facebook.com/')
+                  i.fab.fa-facebook-square 
+                  
+              li.nav-item.social
+                a.nav-link.mr-2(href='https://twitter.com/')
+                  i.fab.fa-twitter-square 
+                  
               li.nav-item.dropdown.pos-stc-xs
                 a.nav-link.mr-2(href='', data-toggle='dropdown')
                   i.material-icons 
@@ -91,7 +109,7 @@ html(lang='en')
                 h4.mb-0._300 Welcome to the UTS Loan Application System
                 small.text-muted
                   | !{new Date()} 
-          .padding    
+          .padding.bodyM    
             block body
     // jQuery
     script(src='/libs/jquery/jquery/dist/jquery.js')
