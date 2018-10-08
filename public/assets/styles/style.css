@@ -6,7 +6,7 @@ ul.headerM li a {
     display: inline-block;
 }
 #view .p-a {
-    top: 9em;
+    top: 79px;
     position: relative;
 
 }
@@ -18,8 +18,23 @@ ul.headerM li a {
 }
 
 .padding.bodyM {
-    margin-top: 7.5em;
+    margin-top: 65px;
 }
+
+/* Home Page / login page */
+.background-block {
+/*     background-image: url(../logo.png);
+    background-position: 50% 10%;
+    background-repeat: no-repeat; */
+}
+
+a.nav-link.login-logo {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid;
+}
+
 
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 767px) {
