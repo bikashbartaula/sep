@@ -54,15 +54,13 @@ html(lang='en')
                     img(src='/logo.png', style='height: 100px')
                   
                   a.nav-link(href='../') 
-                    span HOME   |
+                    span Home   |
                     a.nav-link(href='/')
                       span Our Team   |
                   a.nav-link(href='/application/new')
                     span New Application  |
                   a.nav-link(href='/application/new')
-                    span New Application  |
-                  a.nav-link(href='/application/new')
-                    span New Application  |
+                    span Contact
                   div(ui-include="'../views/blocks/dropdown.new.html'")
               div(ui-include="'../views/blocks/navbar.form.html'")
               // /
@@ -71,11 +69,11 @@ html(lang='en')
             ul.nav.navbar-nav.ml-auto.flex-row.right-navM
               li.nav-item.socail
                 a.nav-link.mr-2(href='https://www.facebook.com/')
-                  i.fab.fa-facebook-square 
+                  i.fa.fa-facebook
                   
               li.nav-item.social
                 a.nav-link.mr-2(href='https://twitter.com/')
-                  i.fab.fa-twitter-square 
+                  i.fa.fa-twitter
                   
               li.nav-item.dropdown.pos-stc-xs
                 a.nav-link.mr-2(href='', data-toggle='dropdown')
@@ -93,7 +91,7 @@ html(lang='en')
                   i.material-icons 
             // / navbar right
         .app-footer.white
-          .p-2.text-xs
+          .p-2
             .pull-right.text-muted.py-1
               | © Copyright 
               strong SEP
@@ -101,7 +99,9 @@ html(lang='en')
               a(ui-scroll-to='content')
                 i.fa.fa-long-arrow-up.p-x-sm
             .nav
-              a.nav-link(href='../') About
+              a.nav-link.text-primary(href='../') Home
+              a.nav-link.text-primary(href='../') Menu 2
+              a.nav-link.text-primary(href='../') Menu 3
         #view.app-body(ui-view='')
           .p-a.white.lt.box-shadow
             .row

@@ -23,12 +23,17 @@ html(lang='en')
     link(rel='stylesheet', href='/assets/styles/app.css', type='text/css')
     // endbuild
     link(rel='stylesheet', href='/assets/styles/font.css', type='text/css')
+    // added by Bikash
+    link(rel='stylesheet', href='/assets/styles/style.css', type='text/css')
   body
     #app.app
       // ############ LAYOUT START
-      .center-block.w-xxl.w-auto-xs.p-y-md
-        .p-a-md.box-color.r.box-shadow-z1.text-color.m-a
-          .m-b.text-sm
+      .background-block
+        a.nav-link.login-logo(href='/')
+          img(src='/logo.png', style='background-position: 50% 10%; background-repeat: no-repeat;')
+        .center-block.w-xxl.w-auto-xs.p-y-md
+         .p-a-md.box-color.r.box-shadow-z1.text-color.m-a
+          .m-b.text-sm.text-primary
             | Sign in with your UTS Account
           form(method='post', action='/authentication/login')
             .md-form-group.float-label
@@ -43,9 +48,9 @@ html(lang='en')
                 i.primary
                 |  Keep me signed in
             button.btn.primary.btn-block.p-x-md(type='submit') Sign in
-        .p-v-lg.text-center
-          .m-b
-            a.text-primary._600(ui-sref='access.forgot-password', href='forgot-password.html') Forgot password?
+          .p-v-lg.text-center
+            .m-b
+              a.text-primary._600(ui-sref='access.forgot-password', href='forgot-password.html') Forgot password?
       // ############ LAYOUT END
     // build:js /scripts/app.html.js
     // jQuery
