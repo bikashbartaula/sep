@@ -39,6 +39,8 @@ pre {
   border-color: rgba(120, 130, 140, 0.13);
 }
 
+
+
 blockquote {
   border-color: rgba(120, 130, 140, 0.13);
 }
@@ -1564,8 +1566,10 @@ a.list-group-item.hover {
 .table>tbody>tr>th,
 .table>tfoot>tr>td,
 .table>tfoot>tr>th {
-  padding-left: 16px;
-  padding-right: 16px;
+/*   padding-left: 16px;
+  padding-right: 16px; */
+    padding-left: 20px;
+    padding-right: 0px;
   border-color: rgba(120, 130, 140, 0.045);
 }
 
@@ -5159,7 +5163,7 @@ div.input-group>.select2-container>.selection {
 }
 
 .p-y-md {
-  padding-top: 4.5rem !important;
+  padding-top: 0.5rem !important;
   padding-bottom: 1.5rem !important;
 }
 
