@@ -1,0 +1,31 @@
+extends ./layout 
+
+block head
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css", rel="stylesheet")
+
+block body
+    .padding
+        .col-md-12(style='padding: 0 0 0 0;')
+            .box
+                .box-header
+                    h2 Loans
+                .table-responsive
+                    table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+                        thead
+                            tr
+                                th ID
+                                th Application ID
+                                th User
+                                th Amount
+                                th Length
+                                th Date Started
+                        tbody
+                            if(data.loans && data.loans.length) 
+                                each loan in data.loans
+                                    tr
+                                        td #{loan.id}
+                                        td #{loan.application_id}
+                                        td #{loan.User.first_name + " " + loan.User.last_name}
+                                        td #{loan.amount}
+                                        td #{loan.length}
+                                        td #{loan.date_started}

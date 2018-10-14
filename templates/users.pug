@@ -1,0 +1,126 @@
+extends ./layout 
+
+block head
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css", rel="stylesheet")
+
+block body
+    .padding
+        .col-md-12(style='padding: 0 0 0 0;')
+            .box
+                .box-header
+                    h2 Users
+                .table-responsive
+                    table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+                        thead
+                            tr
+                                th ID
+                                th UTS ID
+                                th Name
+                                th Role
+                                th Email
+                                th Number
+                                th Delete
+                        tbody
+                            if(data.users && data.users.length) 
+                                each user in data.users
+                                    tr
+                                        td #{user.id}
+                                        td #{user.uts_id}
+                                        td #{user.first_name + " " + user.last_name}
+                                        td #{user.User_Role.Role.name}
+                                        td #{user.email}
+                                        td #{user.number}
+                                        td 
+                                            button#delete.btn-sm.btn-block.btn-danger(style="width: 10px;") 
+                                                i.fa.fa-times
+                .box-footer
+                    button.btn-sm.btn-block.btn-primary(style="width: 125px;", data-toggle="modal" data-target="#newUser") Add
+    #newUser.modal(data-backdrop='true')
+        .modal-dialog
+            .modal-content
+                .modal-header
+                    h5.modal-title New User
+                .modal-body.p-lg#userForm
+                    .form-group
+                        label(for='uts_id') UTS ID
+                        input#uts_id.form-control(type='text', placeholder='UTS ID')
+                    .form-group
+                        label(for='first_name') First Name
+                        input#first_name.form-control(type='text', placeholder='First Name')
+                    .form-group
+                        label(for='last_name') Last Name
+                        input#last_name.form-control(type='text', placeholder='Last Name')
+                    .form-group 
+                        label(for='role') Role
+                        select#role.form-control.c-select
+                            option(value="1") System Admin
+                            option(value="2") Admin
+                            option(value="3") Student
+
+                    .form-group
+                        label(for='email') Email
+                        input#email.form-control(type='email', placeholder='Email')
+                    .form-group
+                        label(for='number') Number
+                        input#number.form-control(type='text', placeholder='Phone Number')
+                    .form-group
+                        label(for='password') Password
+                        input#password.form-control(type='password', placeholder='Password')
+                    .form-group
+                        label(for='password_again') Confirm Password
+                        input#password_again.form-control(type='password', placeholder='Confirm Password')
+                .modal-footer
+                    button#add.btn.btn-primary.p-x-md(type='button', data-dismiss='modal') Add
+
+block scripts
+    script.
+        $('button#delete').on('click', function() {
+            var id = $(this).parent().parent().children().eq(0).text();
+            
+            $.ajax({
+                url: '/users/delete',
+                method: 'post',
+                data: {
+                    id: id
+                }
+            })
+            .then(function() {
+                toastr.success('', 'Removed!');
+                location.reload();
+            });
+        });
+
+        $('#add').on('click', function() {
+            var data = {};
+
+            var err;
+            $('#userForm input').each(function(i, elem) {
+                var name = $(elem).attr('id');
+                var val = $(elem).val();
+
+                if(!val) {
+                    name = name.split('_').map(word => word.charAt(0).toUpperCase() + word.substr(1));
+                    if(!err) err = 'Please enter your ' + name.join(' ') + '!';
+                }
+
+                data[name] = val;
+            }); 
+
+            if(err) return toastr.error(err, 'Unable to create user!');
+
+            data.role = $('#role').val();
+
+            if(data.password !== data['password_again']) {
+                return toastr.error('Passwords do not match!', 'Unable to create user!');
+            }
+
+            $.ajax({
+                url: '/users/create',
+                method: 'post',
+                data: data
+            })
+            .then(function() {
+                toastr.success('', 'Created!');
+                location.reload();
+            })
+        });

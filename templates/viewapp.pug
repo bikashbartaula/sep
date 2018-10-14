@@ -1,0 +1,15 @@
+extends ./layout 
+
+block body
+    .padding
+        .row
+            .col-md-12
+                .box
+                    .box-header
+                        h2 View Application ##{data.application_id} -- Credit Score #{data.user.credit}
+                    .box-body#application
+                        if(data.answers && data.answers.length)
+                            for answer in data.answers
+                                .form-group
+                                    label #{answer.Question.question}
+                                    input.form-control(type='text', disabled, value=answer.answer)

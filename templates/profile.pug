@@ -1,0 +1,47 @@
+extends ./layout 
+
+block head
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css", rel="stylesheet")
+
+block body
+    .item
+        .item-bg
+            img.blur.opacity-3(src='/user.png')
+        .p-a-md
+            .row.m-t
+                .col-sm-7
+                    a.pull-left.m-r-md(href='')
+                        span.avatar.w-96
+                            img(src='/user.png')
+                            i.on.b-white
+                    .clear.m-b
+                        h3.m-0.m-b-xs #{user.first_name + " " + user.last_name}
+                        p.text-muted
+                            span.m-r #{user.role.name}
+                            small
+                                i.fa.fa-map-marker.m-r-xs
+                                | Sydney, Australia
+                        a.btn.btn-sm.warn.btn-rounded.m-b(href='/profile/edit') Edit My Details
+    .col-md-12(style='padding: 0 0 0 0;')
+        .box
+            .box-header
+                h2 My Loans
+            .table-responsive
+                table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+                    thead
+                        tr
+                            th Loan ID
+                            th Amount
+                            th Reminaing
+                            th Date Started
+                    tbody
+                        if(data.loans && data.loans.length) 
+                            each loan in data.loans
+                                tr
+                                    td #{loan.id}
+                                    td #{loan.amount}
+                                    td #{loan.amount}
+                                    td #{loan.date_started}
+
+
+block scripts

@@ -1,0 +1,88 @@
+extends ./layout 
+
+block head
+
+
+block body
+    .row.no-gutter
+        .col-sm-3.col-lg-2
+            .p-y
+                .nav-active-border.left.b-primary
+                    ul.nav.nav-sm.flex-column
+                        li.nav-item
+                            a.nav-link.block.active(href='', data-toggle='tab', data-target='#tab-1') Profile
+                        li.nav-item
+                            a.nav-link.block(href='', data-toggle='tab', data-target='#tab-2') Password
+        .col-sm-9.col-lg-10.light.lt
+            .tab-content.pos-rlt
+                #tab-1.tab-pane.active
+                    .p-a-md.dker._600 Profile 
+                    .p-a-md.col-md-6
+                        .form-group
+                            label First Name
+                            input.form-control#first_name(type='text', value=user.first_name)
+                        .form-group
+                            label Last Name
+                            input.form-control#last_name(type='text', value=user.last_name)
+                        .form-group
+                            label Email
+                            input.form-control#email(type='text', value=user.email)
+                        button.btn.btn-info.m-t#updateProfile(type='submit') Update
+                #tab-2.tab-pane
+                    .p-a-md.dker._600 Password 
+                    .p-a-md.col-md-6
+                        .form-group
+                            label New Password
+                            input.form-control#password(type='password')
+                        .form-group
+                            label Confirm Password
+                            input.form-control#confPassword(type='password')
+                        button.btn.btn-info.m-t#updatePassword(type='submit') Update
+block scripts
+    script.
+        $('#updateProfile').on('click', function() {
+            var first_name = $('#first_name').val();
+            var last_name = $('#last_name').val();
+            var email = $('#email').val();
+
+            if(!first_name) return toastr.error('Undefined first name!', 'Error');
+            if(!last_name) return toastr.error('Undefined last name!', 'Error');
+            if(!email) return toastr.error('Undefined email!', 'Error');
+
+            $.ajax({
+                url: '/profile/edit',
+                method: 'post',
+                data: {
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email
+                }
+            })
+            .then(function() {
+                toastr.success('','Success!');
+            })
+            .catch(function(err) {
+                toastr.error('Unexpected error!', 'Error');
+            });
+        });
+
+        $('#updatePassword').on('click', function() {
+            var password = $('#password').val();
+            var confPassword = $('#confPassword').val();
+
+            if(password !== confPassword) return toastr.error('Passwords do not match!', 'Error!');
+
+            $.ajax({
+                url: '/profile/password',
+                method: 'post',
+                data: {
+                    password: password
+                }
+            })
+            .then(function() {
+                toastr.success('','Success!');
+            })
+            .catch(function(err) {
+                toastr.error('Unexpected error!', 'Error');
+            });
+        });
