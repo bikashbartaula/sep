@@ -1,70 +1,112 @@
 extends ./layout 
 
 block body
-  .row
-    .col-md-12
-      .box
-        .box-header
-          h2 Your Applications
-        .table-responsive
-          table.table.table-striped.b-t.b-b(ui-jp='dataTable')
-            thead
-              tr
-                th Application ID
-                th Amount
-                th Reason
-                th Date Started
-                th Status
-                if(user.role.id == 1)
-                  th Approve
-                  th Reject
-            tbody
-              if(data.applications && data.applications.length > 0)
-                for application in data.applications
-                  tr
-                    td #{application.id}
-                    td #{application.Application_Answers[0] ? "$" + application.Application_Answers[0].answer : 'N/A'}
-                    td #{application.Application_Answers[2] ? application.Application_Answers[2].answer : 'N/A'}
-                    td #{application.date_submitted || 'Not submitted'}
-                    td #{application.Application_Status ? application.Application_Status.name : "N/A"}
-                    if(user.role.id == 1)
-                      td
-                        button#action.btn.btn-block.primary(type='button', style='width: 50%', name=application.id) 
-                          i.fa.fa-check
-                      td
-                        button#action.btn.btn-block.danger(type='button', style='width: 50%', name=application.id) 
-                          i.fa.fa-times
+  .padding
+    .row
+      .col-md-12
+        .box
+          .box-header
+            if(user.role.id > 2)
+              h2 Your Applications
+            else
+              h2 All Applications
+          .table-responsive
+            table.table.table-striped.b-t.b-b(ui-jp='dataTable')
+              thead
+                tr
+                  th ID
+                  th Amount
+                  th Reason
+                  th Date Submitted
+                  th Status
+                  th View
+                  if(user.role.id < 3)
+                    th Approve
+                    th Reject
+                  if(user.role.id == 3)
+                    th Edit
+                    th Delete
+              tbody
+                if(data.applications && data.applications.length > 0)
+                  for application in data.applications
+                    tr
+                      td #{application.id}
+                      td #{application.Application_Answers[0] ? "$" + application.Application_Answers[0].answer : 'N/A'}
+                      td #{application.Application_Answers[2] ? application.Application_Answers[2].answer : 'N/A'}
+                      td #{application.date_submitted ? new Date(application.date_submitted).getDate() + "/" + (1 + new Date(application.date_submitted).getMonth()) + "/" + new Date(application.date_submitted).getFullYear() : 'Not submitted'}
+                      td #{application.Application_Status ? application.Application_Status.name : "N/A"}
+                      td 
+                        a(href="/application/view?id=" + application.id)
+                          button.btn.btn-block.primary(type='button', style='width: 50%') 
+                              i.fa.fa-eye
+                      
+                        if(user.role.id < 3)
+                          td
+                            button#delete.btn.btn-block.success(type='button', style='width: 50%', name=application.id, class=application.status > 3 ? "disabled" : "") 
+                              i.fa.fa-check
+                        if(user.role.id == 3)
+                          td
+                            a(href="/application/edit?id=" + application.id)
+                              button.btn.btn-block.primary(class=application.status > 1 ? "disabled" : "", type='button', style='width: 50%') 
+                                i.fa.fa-edit
+                        td
+                          button#delete.btn.btn-block.danger(type='button', style='width: 50%', name=application.id, class=application.status > 3 ? "disabled" : "") 
+                            i.fa.fa-times
 
-  .row
-    .col-md-12
-      .box
-        .box-header
-          h2 Your Loans
-        .table-responsive
-          table.table.table-striped.b-t.b-b(ui-jp='dataTable')
-            thead
-              tr
-                th Loan ID
-                th Amount
-                th Reminaing
-                th Date Started
 
 block scripts
-  script.
-    $('button#action').on('click', function() {
-      var approve = $(this).attr('class').split(' ').indexOf('primary') !== -1;
-      var id = $(this).attr('name');
-      $.post({
-        url: '/application/process',
-        data: {
-          approve: approve,
-          application_id: id
-        }
-      })
-      .then(function() {
-        console.log('Success');
-      })
-      .catch(function(err) {
-        console.log(err);
+  if(user.role.id > 2)
+    script.
+      $('button#delete').on('click', function() {
+        var id = $(this).attr('name');
+        
+        $.ajax({
+          url: '/application/delete',
+          method: 'post',
+          data: {
+            id: id
+          }
+        })
+        .then(function() {
+          toastr.success('', 'Deleted!');
+          location.reload();
+        });
       });
-    });
+  else
+    script.
+      $('button#delete').on('click', function() {
+        var approve = $(this).attr('class').split(' ').indexOf('success') !== -1 ? 1 : null;
+        var id = $(this).attr('name');
+        $.ajax({
+          url: '/application/process',
+          method: 'post',
+          data: {
+            approve: approve,
+            application_id: id
+          }
+        })
+        .then(function() {
+          if(approve) {
+            toastr.success('','Approved!');
+          } else {
+            toastr.error('','Rejected!');
+          }
+          location.reload();
+        })
+      });
+
+      /*$('button#delete').on('click', function() {
+        var id = $(this).attr('name');
+        
+        $.ajax({
+          url: '/application/delete',
+          method: 'post',
+          data: {
+            id: id
+          }
+        })
+        .then(function() {
+          toastr.success('', 'Deleted!');
+          location.reload();
+        });
+      });*/
