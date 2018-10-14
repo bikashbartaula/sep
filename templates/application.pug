@@ -1,13 +1,13 @@
 extends ./layout 
 
 block body
-    .row
-        .col-md-offset-3.col-md-6.col-sm-12.col-xs-12
-            .box
-                .box-header
-                    h2 New Application
-                .box-body
-                    form(method='post', action='/application/new')
+    .padding
+        .row
+            .col-md-12
+                .box
+                    .box-header
+                        h2 New Application
+                    .box-body#application
                         if(data.application_id)
                             input.form-control(name='application', type='number', hidden='' value=data.application_id)
                         if(data.questions && data.questions.length > 0)
@@ -20,12 +20,50 @@ block body
                                     when 2
                                         input.form-control(name=question.id, type='text', required='')
                                 br
-                            button#submit.btn.btn-block.primary(type='submit', style='width: 125px') Submit
+                                
+                            button#submit.btn.btn-fw.primary(type='button', style='width: 125px') Submit
+                            button#save.btn.btn-fw.success(type='button', style='width: 125px') Save
 
 
 block scripts
     script.
-        $(document).ready(function() {
-            var err = !{JSON.stringify(err || null)};
-            console.log(err);
+        $('#submit').on('click', function() {
+            var formdata = {};
+            var err;
+            $('#application input').each(function(i, elem) {
+                var id = $(elem).attr('name');
+                var data = $(elem).val();
+                if(!data && !err) err = 'Please fill in all fields!';
+                
+                formdata[id] = data;
+            });
+
+            if(err) return toastr.error(err, 'Error!');
+
+            $.ajax({
+                url: '/application/new',
+                method: 'post',
+                data: formdata
+            })
+            .then(function() {
+                toastr.success('','Saved');
+                window.location.replace('/');
+            })
+        });
+        $('#save').on('click', function() {
+            var formdata = {};
+            $('#application input').each(function(i, elem) {
+                var id = $(elem).attr('name');
+                var data = $(elem).val();
+                if(data) formdata[id] = data;
+            });
+
+            $.ajax({
+                url: '/application/save',
+                method: 'post',
+                data: formdata
+            })
+            .then(function() {
+                toastr.success('','Saved');
+            })
         });
